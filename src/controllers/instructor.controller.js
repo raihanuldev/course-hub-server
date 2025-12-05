@@ -1,10 +1,28 @@
 const { getDB } = require("../config/db");
 const sendResponse = require("../utlites/sendResponse");
+const { ObjectId } = require('mongodb')
+
+exports.makeInstructor = async (req, res) => {
+    try {
+        const db = getDB();
+        const id = req.params.id;
+        const _id = new ObjectId(id)
+        const result = await db.collection('usersCollection').findOneAndUpdate(
+            { _id: _id },
+            { $set: { role: 'instructor' } }
+        )
+        sendResponse(res,result)
+    } catch (err) {
+        res.status(500).send({ status: "error", message: err.message })
+    }
+}
+
+
 
 exports.getAllInstructor = async (req, res) => {
     const db = getDB();
     try {
-        const instructors = await db.collection('couresCollection').aggregate([
+        const instructors = await db.collection('usersCollection').aggregate([
             {
                 $group: {
                     _id: "$instructorEmail",
@@ -16,7 +34,7 @@ exports.getAllInstructor = async (req, res) => {
             }
         ]).toArray();
 
-        sendResponse(res,instructors)
+        sendResponse(res, instructors)
     } catch (error) {
         res.status(500).send(error.message);
     }
@@ -42,3 +60,5 @@ exports.getTopInstructor = async (req, res) => {
         res.status(500).send({ status: "error", message: err.message })
     }
 }
+
+// TODO: Make instrctor reDesgin db

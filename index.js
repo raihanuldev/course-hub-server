@@ -21,29 +21,6 @@ async function run() {
     const contentCollection = client.db('Language').collection('content-collections');
     const clubMemberCollection = client.db('Language').collection('clubMemberCollection');
 
-
-    // all Instructors
-    app.get('/instructors', async (req, res) => {
-      try {
-        const instructors = await couresCollection.aggregate([
-          {
-            $group: {
-              _id: "$instructorEmail",
-              instructor: { $first: "$$ROOT" }
-            }
-          },
-          {
-            $replaceRoot: { newRoot: "$instructor" }
-          }
-        ]).toArray();
-
-        res.send(instructors);
-      } catch (error) {
-        console.error(error);
-        res.status(500).send("Internal Server Error");
-      }
-    });
-
     // Ssl-Commarce APi Added
     // to generate UniqueID---Transaction_id
     const tran_id = new ObjectId().toString();
@@ -343,20 +320,7 @@ async function run() {
       res.send(paymentHistory)
     })
 
-    await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
   }
 }
-run().catch(console.dir);
-
-
-
-
-app.get('/', (req, res) => {
-  res.send('Assalamualikom.Server Is Running')
-})
-
-app.listen(port, '0.0.0.0', () => {
-  console.log(`Server running on port ${port}`);
-});

@@ -3,15 +3,12 @@ const app = express();
 const { OpenAI } = require('openai');
 const SSLCommerzPayment = require('sslcommerz-lts')
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-const cors = require('cors');
+
 require('dotenv').config();
 const port = process.env.PORT || 5000;
 const stripe = require('stripe')(process.env.DB_PAYMENT_KEY)
 const openai = new OpenAI({ apiKey: process.env.openAI_key | 11111 })
 
-// middleWare
-app.use(cors())
-app.use(express.json())
 
 // const uri = "mongodb+srv://<username>:<password>@cluster0.jvqibpv.mongodb.net/?retryWrites=true&w=majority";
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.jvqibpv.mongodb.net/?retryWrites=true&w=majority`;

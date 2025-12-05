@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors')
+require('dotenv').config();
 const app = express();
 const userRoutes = require('./src/routes/user.routes');
 const logger = require('./src/middilwares/Logger');

@@ -20,26 +20,8 @@ async function run() {
     const paymentCollection = client.db('Language').collection('paymentCollection');
     const contentCollection = client.db('Language').collection('content-collections');
     const clubMemberCollection = client.db('Language').collection('clubMemberCollection');
-    /*
-   =>=>=>=>=>Live Chat useing OpenAi Key =>=>=>=>=>=>
-   */
-    app.post('/chat', async (req, res) => {
-      const userQuery = req.body.query;
-      // console.log(req.body);
-      // console.log(req.body.query);
-      // use open Ai  APi to generate a model response
-      const modelResponse = await openai.chat.completions.create({
-        model: 'text-davinci-003',
-        prompt: userQuery,
-        max_tokens: 150,
-      });
 
-      console.log(modelResponse.choices[0].text.trim());
-      res.send({ message: modelResponse.choices[0].text.trim() })
-    })
 
-    // Public Apis
-    // top 6 Coures.
     app.get('/coures', async (req, res) => {
       const result = await couresCollection.find().sort({ enrolled: -1 }).limit(6).toArray();
       res.send(result);
@@ -340,25 +322,26 @@ async function run() {
     });
     //get all club members
     app.get('/club-members', async (req, res) => {
-  try {
-    const members = await clubMemberCollection.find().toArray();
-    res.send(members);
-  } catch (error) {
-    console.error("Failed to fetch club members:", error);
-    res.status(500).send({ error: 'Internal Server Error' });
-  }
-});
-//is club member check
-app.get('/is-club-member', async (req, res) => {
-  const email = req.query.email;
-  try {
-    const member = await clubMemberCollection.findOne({ email });
-    res.send({ isMember: !!member });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ isMember: false });
-  }
-});
+      try {
+        const members = await clubMemberCollection.find().toArray();
+        res.send(members);
+      } catch (error) {
+        console.error("Failed to fetch club members:", error);
+        res.status(500).send({ error: 'Internal Server Error' });
+      }
+    });
+
+    //is club member check
+    app.get('/is-club-member', async (req, res) => {
+      const email = req.query.email;
+      try {
+        const member = await clubMemberCollection.findOne({ email });
+        res.send({ isMember: !!member });
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ isMember: false });
+      }
+    });
 
     // Make Instrucotr
     app.put('/make-instructor/:id', async (req, res) => {
@@ -389,15 +372,6 @@ app.get('/is-club-member', async (req, res) => {
       const { cartId, email } = item.cartId
       const result = await cartCollection.insertOne(item);
       res.send(result);
-
-      // const extingCart = await cartCollection.findOne({ cartId });
-      // if (extingCart && extingCart.cartId === cartId && extingCart.email === email) {
-      //   console.log('badija tomak add kora jabe nah tomi beshi jargoy korcho');
-      //   return res.send([])
-      // }
-      // else {
-
-      // }
     })
     // Single Cart Remove
     app.delete('/carts', async (req, res) => {
@@ -432,13 +406,9 @@ app.get('/is-club-member', async (req, res) => {
       res.send(paymentHistory)
     })
 
-
-
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
-    // Ensures that the client will close when you finish/error
-    // await client.close();
   }
 }
 run().catch(console.dir);

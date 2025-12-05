@@ -321,13 +321,13 @@ async function run() {
 
     // WARNING! IAM CHANGED USERS API>>>>
     // users Apis
-    app.get('/user', async (req, res) => {
-      const email = req.query.email;
-      const query = { email: email }
-      // console.log(query);
-      const result = await usersCollection.findOne(query);
-      res.send(result)
-    })
+    // app.get('/user', async (req, res) => {
+    //   const email = req.query.email;
+    //   const query = { email: email }
+    //   // console.log(query);
+    //   const result = await usersCollection.findOne(query);
+    //   res.send(result)
+    // })
 
     // Received Data.
     app.post('/users', async (req, res) => {

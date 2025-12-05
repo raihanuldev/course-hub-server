@@ -1,26 +1,12 @@
 const express = require('express');
 const app = express();
-const { OpenAI } = require('openai');
 const SSLCommerzPayment = require('sslcommerz-lts')
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 require('dotenv').config();
 const port = process.env.PORT || 5000;
 const stripe = require('stripe')(process.env.DB_PAYMENT_KEY)
-const openai = new OpenAI({ apiKey: process.env.openAI_key | 11111 })
 
 
-// const uri = "mongodb+srv://<username>:<password>@cluster0.jvqibpv.mongodb.net/?retryWrites=true&w=majority";
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.jvqibpv.mongodb.net/?retryWrites=true&w=majority`;
-
-
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
 // SSL commerce.
 const store_id = process.env.ssl_store_id;
 const store_passwd = process.env.ssl_store_pass;
@@ -28,8 +14,6 @@ const is_live = false;
 
 async function run() {
   try {
-    await client.connect();
-
     const couresCollection = client.db('Language').collection('couresCollection');
     const usersCollection = client.db('Language').collection('usersCollection');
     const cartCollection = client.db('Language').collection('cartCollection');
@@ -315,13 +299,6 @@ async function run() {
         res.status(500).json({ error: "Internal server error", err });
       }
     });
-
-
-    // All Users 
-    app.get('/all-users', async (req, res) => {
-      const result = await usersCollection.find().toArray();
-      res.send(result)
-    })
 
     // Make admin Role
     app.put('/make-admin/:id', async (req, res) => {

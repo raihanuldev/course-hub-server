@@ -316,28 +316,6 @@ async function run() {
       }
     });
 
-    // WARNING! IAM CHANGED USERS API>>>>
-    // users Apis
-    // app.get('/user', async (req, res) => {
-    //   const email = req.query.email;
-    //   const query = { email: email }
-    //   // console.log(query);
-    //   const result = await usersCollection.findOne(query);
-    //   res.send(result)
-    // })
-
-    // Received Data.
-    app.post('/users', async (req, res) => {
-      const user = req.body;
-      console.log(user)
-      const query = { email: user.email };
-      const exitingUser = await usersCollection.findOne(query);
-      if (exitingUser) {
-        return res.send({ messgae: 'User Alredy exiting on Database' })
-      }
-      const result = await usersCollection.insertOne(user);
-      res.send(result);
-    })
 
     // All Users 
     app.get('/all-users', async (req, res) => {

@@ -12,3 +12,19 @@ exports.getUser = async (req, res) => {
         res.status(500).send({ status: "error", message: err.message });
     }
 }
+
+exports.postUser = async (req, res) => {
+    try {
+        const user = req.body;
+        const Db = getDB();
+        const query = { email: user.email };
+        const exitingUser = await Db.collection('usersCollection').findOne(query);
+        if (exitingUser) {
+            return res.send({status:"success", message: 'User already exiting on Database' })
+        }
+        const result = await Db.collection('usersCollection').insertOne(user);
+        sendResponse(res,result);
+    } catch (err) {
+        res.status(500).send({ status: "error", message: err.message });
+    }
+}

@@ -1,4 +1,5 @@
 const { getDB } = require("../config/db");
+const { ObjectId } = require('mongodb');
 const sendResponse = require("../utlites/sendResponse");
 
 
@@ -26,11 +27,34 @@ exports.getAllCoures = async (req, res) => {
 
 exports.getAllApprovedCoures = async (req, res) => {
     try {
-        const db= getDB();
+        const db = getDB();
         const apporvedCoures = await db.collection('couresCollection').find({ status: "approved" });
         const result = await apporvedCoures.toArray();
+        sendResponse(res, result)
+    } catch (err) {
+        res.status(500).send({ status: "error", message: err.message });
+    }
+}
+
+exports.makeApprovalCoures = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const db = getDB();
+        const _id = new ObjectId(id);
+        const result = await db.collection('couresCollection').findOneAndUpdate(
+            { _id: _id },
+            {
+                $set: { status: 'approved' },
+                $inc: {
+                    enrolled: 1,
+                    availableSeats: -1,
+                },
+            }
+
+        )
         sendResponse(res,result)
     } catch (err) {
         res.status(500).send({ status: "error", message: err.message });
+
     }
 }

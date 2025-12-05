@@ -182,12 +182,7 @@ async function run() {
     });
 
 
-    // All Approved Class
-    app.get('/allclasses', async (req, res) => {
-      const apporvedCoures = await couresCollection.find({ status: "approved" });
-      const result = await apporvedCoures.toArray();
-      res.send(result);
-    })
+
     // Update Class Staus Approved
     app.put('/classCollection/:id', async (req, res) => {
       const id = req.params.id;

@@ -52,7 +52,24 @@ exports.makeApprovalCoures = async (req, res) => {
             }
 
         )
-        sendResponse(res,result)
+        sendResponse(res, result)
+    } catch (err) {
+        res.status(500).send({ status: "error", message: err.message });
+
+    }
+}
+
+exports.Feedback = async (req, res) => {
+    try {
+        const db = getDB();
+        const _id = new ObjectId(req.params.id);
+        const message = req.body;
+        console.log(message);
+        const result = await db.collection('couresCollection').findOneAndUpdate(
+            { _id: _id },
+            { $set: { feedback: message } }
+        )
+        res.send(result)
     } catch (err) {
         res.status(500).send({ status: "error", message: err.message });
 

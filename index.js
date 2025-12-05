@@ -181,26 +181,6 @@ async function run() {
       }
     });
 
-
-
-    // Update Class Staus Approved
-    app.put('/classCollection/:id', async (req, res) => {
-      const id = req.params.id;
-      console.log(id);
-      const _id = new ObjectId(id);
-      const result = await couresCollection.findOneAndUpdate(
-        { _id: _id },
-        {
-          $set: { status: 'approved' },
-          $inc: {
-            enrolled: 1,
-            availableSeats: -1,
-          },
-        }
-
-      )
-      res.send(result)
-    })
     // Send Feedback
     app.put('/feedback/:id', async (req, res) => {
       const _id = new ObjectId(req.params.id);

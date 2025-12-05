@@ -22,11 +22,6 @@ async function run() {
     const clubMemberCollection = client.db('Language').collection('clubMemberCollection');
 
 
-    app.get('/coures', async (req, res) => {
-      const result = await couresCollection.find().sort({ enrolled: -1 }).limit(6).toArray();
-      res.send(result);
-    })
-
     // top instructor
     app.get('/topinstructor', async (req, res) => {
       const topinstructors = await couresCollection.aggregate([
@@ -193,12 +188,6 @@ async function run() {
       const result = await apporvedCoures.toArray();
       res.send(result);
     })
-    // All Coures Collections
-    app.get('/classCollection', async (req, res) => {
-      const result = await couresCollection.find().toArray();
-      res.send(result)
-    })
-
     // Update Class Staus Approved
     app.put('/classCollection/:id', async (req, res) => {
       const id = req.params.id;

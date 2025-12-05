@@ -22,22 +22,6 @@ async function run() {
     const clubMemberCollection = client.db('Language').collection('clubMemberCollection');
 
 
-    // top instructor
-    app.get('/topinstructor', async (req, res) => {
-      const topinstructors = await couresCollection.aggregate([
-        {
-          $group: {
-            _id: '$teacherId',
-            totalEnrollments: { $sum: '$enrolled' },
-            instructorName: { $push: { instructor: '$instructorName' } },
-            instructorImage: { $push: { image: '$instructorImage' } }
-          },
-        },
-        { $sort: { totalEnrollments: -1 } },
-        { $limit: 6 }]).toArray();
-
-      res.send(topinstructors)
-    })
     // all Instructors
     app.get('/instructors', async (req, res) => {
       try {
@@ -181,17 +165,6 @@ async function run() {
       }
     });
 
-    // Send Feedback
-    app.put('/feedback/:id', async (req, res) => {
-      const _id = new ObjectId(req.params.id);
-      const message = req.body;
-      console.log(message);
-      const result = await couresCollection.findOneAndUpdate(
-        { _id: _id },
-        { $set: { feedback: message } }
-      )
-      res.send(result)
-    })
 
     // Update Denied Status
     app.put('/classDenied/:id', async (req, res) => {

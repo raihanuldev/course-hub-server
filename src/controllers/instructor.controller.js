@@ -2,6 +2,22 @@ const { getDB } = require("../config/db");
 const sendResponse = require("../utlites/sendResponse");
 const { ObjectId } = require('mongodb')
 
+
+exports.getMyAddedClass = async (req, res) => {
+    try {
+        const db = getDB();
+        const email = req.query.email;
+        const query = { instructorEmail: email }
+        const result = await db.collection('couresCollection').find(query).toArray();
+        sendResponse(res,result);
+    } catch (err) {
+        res.status(500).send({ status: "error", message: err.message })
+
+    }
+}
+
+
+
 exports.makeInstructor = async (req, res) => {
     try {
         const db = getDB();
@@ -11,7 +27,7 @@ exports.makeInstructor = async (req, res) => {
             { _id: _id },
             { $set: { role: 'instructor' } }
         )
-        sendResponse(res,result)
+        sendResponse(res, result)
     } catch (err) {
         res.status(500).send({ status: "error", message: err.message })
     }

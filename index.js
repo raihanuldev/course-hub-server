@@ -159,14 +159,7 @@ async function run() {
       const result = await couresCollection.insertOne(item);
       res.send(result)
     })
-    // My Added Classes
-    app.get('/my-classes', async (req, res) => {
-      const email = req.query.email;
-      console.log(email);
-      const query = { instructorEmail: email }
-      const result = await couresCollection.find(query).toArray();
-      res.send(result)
-    })
+    
     // Add Module
     app.patch("/content-collections/:courseId", async (req, res) => {
       const courseId = req.params.courseId;
@@ -270,30 +263,7 @@ async function run() {
     })
 
 
-    // Carts apis
-    app.get('/carts', async (req, res) => {
-      const email = req.query.email;
-      console.log(email);
-      if (!email) {
-        return res.send([])
-      }
-      const query = { email: email };
-      const result = await cartCollection.find(query).toArray();
-      res.send(result)
-    })
-    app.post('/carts', async (req, res) => {
-      const item = req.body;
-      const { cartId, email } = item.cartId
-      const result = await cartCollection.insertOne(item);
-      res.send(result);
-    })
-    // Single Cart Remove
-    app.delete('/carts', async (req, res) => {
-      const couresId = req.body;
-      const query = couresId;
-      const result = await cartCollection.deleteOne(query);
-      res.send(result)
-    })
+    
 
 
 

@@ -7,6 +7,7 @@ const aiRoutes = require('./src/routes/ai.routes')
 const couresRoutes = require('./src/routes/coures.routes')
 const instructorRoutes = require('./src/routes/instructor.routes')
 const logger = require('./src/middilwares/Logger');
+const cartRoutes = require('./src/routes/cart.routes')
 
 // global middilwares
 
@@ -20,5 +21,6 @@ app.use('/v1/user', userRoutes)
 app.use('/v1/ai', aiRoutes)
 app.use('/v1/coures', couresRoutes)
 app.use('/v1/instructor', instructorRoutes)
+app.use('/v1/carts',cartRoutes)
 
 module.exports = app;

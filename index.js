@@ -21,58 +21,6 @@ async function run() {
     const contentCollection = client.db('Language').collection('content-collections');
     const clubMemberCollection = client.db('Language').collection('clubMemberCollection');
 
-    // Ssl-Commarce APi Added
-    // to generate UniqueID---Transaction_id
-    const tran_id = new ObjectId().toString();
-    app.post('/sslPay', async (req, res) => {
-      // console.log(req.body);
-      const { price, email, name, cartId, _id } = req.body;
-      // calculete Price On BDT
-      const bdtPrice = 110 * price;
-      const data = {
-        total_amount: bdtPrice,
-        currency: 'BDT',
-        tran_id: tran_id, // use unique tran_id for each api call
-        success_url: 'abc6557ca5672c76@ssl/success',
-        fail_url: 'https://speakup-ivory.vercel.app/fail',
-        cancel_url: 'https://speakup-ivory.vercel.app/cancel',
-        ipn_url: 'https://speakup-ivory.vercel.app/ipn',
-        shipping_method: 'Online Coures',
-        product_name: name,
-        product_category: "Online Coures",
-        product_profile: 'Coures',
-        cus_email: email,
-        cus_phone: '1234567890',
-        product_id: cartId,
-        couresId: _id,
-        cus_add1: 'Dhaka',
-        cus_add2: 'Dhaka',
-        cus_city: 'Dhaka',
-        cus_state: 'Dhaka',
-        cus_postcode: '1000',
-        cus_country: 'Bangladesh',
-        cus_fax: '01711111111',
-        ship_name: 'Customer Name',
-        ship_add1: 'Dhaka',
-        ship_add2: 'Dhaka',
-        ship_city: 'Dhaka',
-        ship_state: 'Dhaka',
-        ship_postcode: 1000,
-        ship_country: 'Bangladesh',
-      };
-      console.log(data);
-      const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live)
-      sslcz.init(data).then(apiResponse => {
-        console.log(apiResponse);
-        // Redirect the user to payment gateway
-        let GatewayPageURL = apiResponse.GatewayPageURL
-        res.send({ url: GatewayPageURL })
-        console.log('Redirecting to: ', GatewayPageURL)
-      });
-
-
-    })
-
     // Stripe Payment  Releted Apis... plz igonore for /payments path. cz at frist i added stripe
     app.post('/payments', async (req, res) => {
       const payment = req.body;
@@ -249,48 +197,6 @@ async function run() {
         res.status(500).send({ isMember: false });
       }
     });
-
-    // Make Instrucotr
-    app.put('/make-instructor/:id', async (req, res) => {
-      const id = req.params.id;
-      const _id = new ObjectId(id)
-      // console.log(_id);
-      const result = await usersCollection.findOneAndUpdate(
-        { _id: _id },
-        { $set: { role: 'instructor' } }
-      )
-      res.send(result)
-    })
-
-
-    
-
-
-
-    // Payment Intent
-    app.post('/create-payment-intent', async (req, res) => {
-      const { price } = req.body;
-      const amount = price * 100;
-      const paymentIntent = await stripe.paymentIntents.create({
-        amount: amount,
-        currency: 'usd',
-        payment_method_types: ['card']
-      });
-      res.send({
-        clientSecret: paymentIntent.client_secret
-      })
-    })
-
-    // Payment Histroy
-    app.get('/payment-history', async (req, res) => {
-      const email = req.query.email;
-      // console.log(email);
-      const query = { email: email };
-      const paymentHistory = await paymentCollection.find(query).sort({ date: -1 }).toArray();
-      res.send(paymentHistory)
-    })
-
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
   }
 }

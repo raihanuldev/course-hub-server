@@ -15,6 +15,37 @@ exports.getTopCoures = async (req, res) => {
     }
 }
 
+exports.enrolledCoures = async (req, res) => {
+    const db = getDB();
+    const email = req.query.email;
+
+    try {
+        // Check if email exists in clubMemberCollection
+        const isClubMember = await clubMemberCollection.findOne({ email: email });
+
+        let enrolledClassDetails;
+
+        if (isClubMember) {
+            // If club member, give access to all courses
+            enrolledClassDetails = await db.collection('couresCollection').find({}).toArray();
+        } else {
+            // If not a club member, fetch enrolled classes from paymentCollection
+            const enrolledClasses = await db.collection('paymentCollection').find({ email: email }).toArray();
+
+            const enrolledClassIds = enrolledClasses.map(item => new ObjectId(item.couresId));
+
+            enrolledClassDetails = await db.collection('couresCollection').find({
+                _id: { $in: enrolledClassIds }
+            }).toArray();
+        }
+        sendResponse(res, enrolledClassDetails)
+
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+
+
 exports.getAllCoures = async (req, res) => {
     try {
         const db = getDB();
@@ -73,5 +104,19 @@ exports.Feedback = async (req, res) => {
     } catch (err) {
         res.status(500).send({ status: "error", message: err.message });
 
+    }
+}
+
+exports.deniedCoures = async (req, res) => {
+    try {
+        const db = getDB();
+        const _id = new ObjectId(req.params.id)
+        const result = await db.collection('couresCollection').findOneAndUpdate(
+            { _id: _id },
+            { $set: { status: 'denied' } }
+        )
+        sendResponse(res, result)
+    } catch (err) {
+        res.status(500).send({ status: "error", message: err.message });
     }
 }

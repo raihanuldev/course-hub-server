@@ -1,16 +1,10 @@
 const express = require('express');
 const app = express();
-const SSLCommerzPayment = require('sslcommerz-lts')
+
 
 require('dotenv').config();
 const port = process.env.PORT || 5000;
-const stripe = require('stripe')(process.env.DB_PAYMENT_KEY)
 
-
-// SSL commerce.
-const store_id = process.env.ssl_store_id;
-const store_passwd = process.env.ssl_store_pass;
-const is_live = false;
 
 async function run() {
   try {
@@ -22,49 +16,6 @@ async function run() {
     const clubMemberCollection = client.db('Language').collection('clubMemberCollection');
 
     
-    app.get('/enrolled-classes', async (req, res) => {
-      const email = req.query.email;
-      console.log('Request email:', email);
-
-      try {
-        // Check if email exists in clubMemberCollection
-        const isClubMember = await clubMemberCollection.findOne({ email: email });
-
-        let enrolledClassDetails;
-
-        if (isClubMember) {
-          // If club member, give access to all courses
-          enrolledClassDetails = await couresCollection.find({}).toArray();
-        } else {
-          // If not a club member, fetch enrolled classes from paymentCollection
-          const enrolledClasses = await paymentCollection.find({ email: email }).toArray();
-
-          const enrolledClassIds = enrolledClasses.map(item => new ObjectId(item.couresId));
-
-          enrolledClassDetails = await couresCollection.find({
-            _id: { $in: enrolledClassIds }
-          }).toArray();
-        }
-
-        console.log('Enrolled Classes:', enrolledClassDetails);
-        res.send(enrolledClassDetails);
-
-      } catch (error) {
-        console.error(error);
-        res.status(500).send("Internal Server Error");
-      }
-    });
-
-
-    // Update Denied Status
-    app.put('/classDenied/:id', async (req, res) => {
-      const _id = new ObjectId(req.params.id)
-      const result = await couresCollection.findOneAndUpdate(
-        { _id: _id },
-        { $set: { status: 'denied' } }
-      )
-      res.send(result)
-    })
 
     app.post('/newclass', async (req, res) => {
       const item = req.body;

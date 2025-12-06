@@ -1,6 +1,7 @@
 const { getDB } = require("../config/db");
 const { ObjectId } = require('mongodb')
 const sendResponse = require("../utlites/sendResponse");
+const SSLCommerzPayment = require('sslcommerz-lts')
 
 exports.getPaymentHistory = async (req, res) => {
     try {
@@ -47,7 +48,7 @@ exports.payment = async (req, res) => {
                 console.log('Item not found in cartCollection');
             }
         }
-        sendResponse(res,result)
+        sendResponse(res, result)
     } catch (err) {
         res.status(500).send({ status: "error", message: err.message })
     }
@@ -72,6 +73,13 @@ exports.createPaymentIntent = async (req, res) => {
 }
 
 exports.sslPay = async (req, res) => {
+    const stripe = require('stripe')(process.env.DB_PAYMENT_KEY)
+
+
+    // SSL commerce.
+    const store_id = process.env.ssl_store_id;
+    const store_passwd = process.env.ssl_store_pass;
+    const is_live = false;
     try {
         const tran_id = new ObjectId().toString();
         // console.log(req.body);

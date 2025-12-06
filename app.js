@@ -8,7 +8,7 @@ const couresRoutes = require('./src/routes/coures.routes')
 const instructorRoutes = require('./src/routes/instructor.routes')
 const logger = require('./src/middilwares/Logger');
 const cartRoutes = require('./src/routes/cart.routes')
-
+const paymentRoutes = require('./src/routes/payment.routes')
 // global middilwares
 
 app.use(cors())
@@ -22,5 +22,6 @@ app.use('/v1/ai', aiRoutes)
 app.use('/v1/coures', couresRoutes)
 app.use('/v1/instructor', instructorRoutes)
 app.use('/v1/carts',cartRoutes)
+app.use('/v1/pay',paymentRoutes)
 
 module.exports = app;

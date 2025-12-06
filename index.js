@@ -21,42 +21,7 @@ async function run() {
     const contentCollection = client.db('Language').collection('content-collections');
     const clubMemberCollection = client.db('Language').collection('clubMemberCollection');
 
-    // Stripe Payment  Releted Apis... plz igonore for /payments path. cz at frist i added stripe
-    app.post('/payments', async (req, res) => {
-      const payment = req.body;
-      const result = await paymentCollection.insertOne(payment);
-      console.log(payment);
-      if (result.insertedId) {
-        const cartId = payment.couresId;
-        const deleteResult = await cartCollection.deleteOne({ cartId: cartId })
-
-        if (deleteResult.deletedCount === 1) {
-          console.log('Item removed from cartCollection');
-          const couresId = payment.couresId;
-          const updateResult = await couresCollection.updateOne(
-            { _id: new ObjectId(couresId) },
-            {
-              $inc: {
-                enrolled: 1,
-                availableSeats: -1
-              }
-            }
-          );
-
-          if (updateResult.modifiedCount === 1) {
-            console.log('Enrolled count increased in couresCollection');
-          } else {
-            console.log('Failed to increase enrolled count in couresCollection');
-          }
-        } else {
-          console.log('Item not found in cartCollection');
-        }
-      }
-
-      res.send(result)
-
-    })
-
+    
     app.get('/enrolled-classes', async (req, res) => {
       const email = req.query.email;
       console.log('Request email:', email);

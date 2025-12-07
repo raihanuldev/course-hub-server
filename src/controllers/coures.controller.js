@@ -2,6 +2,16 @@ const { getDB } = require("../config/db");
 const { ObjectId } = require('mongodb');
 const sendResponse = require("../utlites/sendResponse");
 
+exports.addNewCoures = async (req, res) => {
+    const db =getDB();
+    try {
+        const item = req.body;
+        const result = await db.collection('couresCollection').insertOne(item);
+        sendResponse(res,result)
+    } catch (err) {
+        res.status(500).send({ status: "error", message: err.message });
+    }
+}
 
 exports.getTopCoures = async (req, res) => {
     try {

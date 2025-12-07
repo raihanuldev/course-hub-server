@@ -16,14 +16,6 @@ async function run() {
     const clubMemberCollection = client.db('Language').collection('clubMemberCollection');
 
     
-
-    app.post('/newclass', async (req, res) => {
-      const item = req.body;
-      console.log(item)
-      const result = await couresCollection.insertOne(item);
-      res.send(result)
-    })
-    
     // Add Module
     app.patch("/content-collections/:courseId", async (req, res) => {
       const courseId = req.params.courseId;

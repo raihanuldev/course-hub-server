@@ -16,6 +16,8 @@
     "nodemon": "^3.1.10",
     "openai": "^4.20.1",
     "sslcommerz-lts": "^1.1.0",
-    "stripe": "^12.9.0"
+    "stripe": "^12.9.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   }
 }

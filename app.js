@@ -8,14 +8,15 @@ const couresRoutes = require('./src/routes/coures.routes')
 const instructorRoutes = require('./src/routes/instructor.routes')
 const logger = require('./src/middilwares/Logger');
 const cartRoutes = require('./src/routes/cart.routes')
-const paymentRoutes = require('./src/routes/payment.routes')
+const paymentRoutes = require('./src/routes/payment.routes');
+const { connectDb } = require('./src/config/db');
 // global middilwares
 
 app.use(cors())
 app.use(express.json())
 app.use(logger)
 
-
+connectDb()
 // Routes
 app.use('/v1/user', userRoutes)
 app.use('/v1/ai', aiRoutes)

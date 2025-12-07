@@ -30,6 +30,16 @@ exports.AddNewModule = async (req, res) => {
     }
 }
 
+exports.GetContent = async (req, res) => {
+    const courseId = req.params.courseId;
+    try {
+        const doc = await contentCollection.findOne({ courseId });
+        if (!doc) return res.status(404).json({ message: "No content found" });
+        res.json(doc);
+    } catch (err) {
+        res.status(500).json({ error: "Internal server error", err });
+    }
+}
 
 exports.getTopCoures = async (req, res) => {
     try {

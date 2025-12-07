@@ -15,36 +15,6 @@ async function run() {
     const contentCollection = client.db('Language').collection('content-collections');
     const clubMemberCollection = client.db('Language').collection('clubMemberCollection');
 
-    
-    // Add Module
-    app.patch("/content-collections/:courseId", async (req, res) => {
-      const courseId = req.params.courseId;
-      const newModule = req.body;
-      console.log(courseId, newModule);
-      try {
-        const result = await contentCollection.updateOne(
-          { courseId: courseId },
-          { $push: { content: newModule } },
-          { upsert: true }
-        );
-        res.send({ success: true, result });
-      } catch (err) {
-        res.status(500).send({ success: false, message: "Database error", error: err });
-      }
-    });
-
-    //get content by courseId
-    app.get("/content-collections/:courseId", async (req, res) => {
-      const courseId = req.params.courseId;
-      try {
-        const doc = await contentCollection.findOne({ courseId });
-        if (!doc) return res.status(404).json({ message: "No content found" });
-        res.json(doc);
-      } catch (err) {
-        res.status(500).json({ error: "Internal server error", err });
-      }
-    });
-
     // Make admin Role
     app.put('/make-admin/:id', async (req, res) => {
       const id = req.params.id;

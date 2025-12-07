@@ -1,5 +1,5 @@
 const express = require('express');
-const { getTopCoures, getAllCoures, getAllApprovedCoures, makeApprovalCoures, Feedback, enrolledCoures, deniedCoures, addNewCoures, AddNewModule } = require('../controllers/coures.controller');
+const { getTopCoures, getAllCoures, getAllApprovedCoures, makeApprovalCoures, Feedback, enrolledCoures, deniedCoures, addNewCoures, AddNewModule, GetContent } = require('../controllers/coures.controller');
 
 const router = express.Router()
 
@@ -13,4 +13,5 @@ router.put('/feedback/:id', Feedback)
 router.put('/deniedCoures/:id', deniedCoures)
 router.post('/addNewCoures', addNewCoures)
 router.patch('/content-collections/:courseId',AddNewModule)
+router.get('/content-collections/:courseId',GetContent)
 module.exports = router;

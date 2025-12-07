@@ -6,7 +6,7 @@ require('dotenv').config();
 const port = process.env.PORT || 5000;
 
 
-async function run() {
+
   try {
     const couresCollection = client.db('Language').collection('couresCollection');
     const usersCollection = client.db('Language').collection('usersCollection');
@@ -14,18 +14,6 @@ async function run() {
     const paymentCollection = client.db('Language').collection('paymentCollection');
     const contentCollection = client.db('Language').collection('content-collections');
     const clubMemberCollection = client.db('Language').collection('clubMemberCollection');
-
-    // Make admin Role
-    app.put('/make-admin/:id', async (req, res) => {
-      const id = req.params.id;
-      const _id = new ObjectId(id)
-      // console.log(_id);
-      const result = await usersCollection.findOneAndUpdate(
-        { _id: _id },
-        { $set: { role: 'admin' } }
-      )
-      res.send(result)
-    })
     // Add a club member if not already exists
     app.post('/add-club-member', async (req, res) => {
       const { email } = req.body;
@@ -75,6 +63,4 @@ async function run() {
         res.status(500).send({ isMember: false });
       }
     });
-  } finally {
-  }
 }

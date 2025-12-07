@@ -1,6 +1,6 @@
 const { getDB } = require("../config/db");
 const sendResponse = require("../utlites/sendResponse");
-
+const {ObjectId} = require('mongodb')
 
 exports.getAllUser = async (req, res) => {
     try {
@@ -64,4 +64,14 @@ exports.postUser = async (req, res) => {
     } catch (err) {
         res.status(500).send({ status: "error", message: err.message });
     }
+}
+
+exports.MakeAdmin = async (req, res) => {
+    const id = req.params.id;
+    const _id = new ObjectId(id)
+    const result = await usersCollection.findOneAndUpdate(
+        { _id: _id },
+        { $set: { role: 'admin' } }
+    )
+    res.send(result)
 }

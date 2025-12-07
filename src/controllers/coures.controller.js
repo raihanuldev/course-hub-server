@@ -3,15 +3,33 @@ const { ObjectId } = require('mongodb');
 const sendResponse = require("../utlites/sendResponse");
 
 exports.addNewCoures = async (req, res) => {
-    const db =getDB();
+    const db = getDB();
     try {
         const item = req.body;
         const result = await db.collection('couresCollection').insertOne(item);
-        sendResponse(res,result)
+        sendResponse(res, result)
     } catch (err) {
         res.status(500).send({ status: "error", message: err.message });
     }
 }
+// Add New Module
+exports.AddNewModule = async (req, res) => {
+    const db = getDB();
+    const courseId = req.params.courseId;
+    const newModule = req.body;
+    console.log("Module Details-> ", courseId, newModule);
+    try {
+        const result = await db.collection('content-collections').updateOne(
+            { courseId: courseId },
+            { $push: { content: newModule } },
+            { upsert: true }
+        );
+        sendResponse(res, result);
+    } catch (err) {
+        res.status(500).send({ status: "error", message: err.message });
+    }
+}
+
 
 exports.getTopCoures = async (req, res) => {
     try {

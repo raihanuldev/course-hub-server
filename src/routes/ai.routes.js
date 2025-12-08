@@ -6,7 +6,7 @@ const router = express.Router();
 
 /**
  * @openapi
- * /ai/chat:
+ * /v1/ai/chat:
  *   post:
  *     tags:
  *       - AI

@@ -5,7 +5,7 @@ const router = express.Router()
 
 /**
  * @swagger
- * /instructor/topinstructor:
+ * /v1/instructor/topinstructor:
  *   get:
  *     summary: Get top instructors based on total enrollments
  *     tags: [Instructor]
@@ -18,7 +18,7 @@ const router = express.Router()
 
 /**
  * @swagger
- * /instructor/instructors:
+ * /v1/instructor/instructors:
  *   get:
  *     summary: Get all instructors
  *     tags: [Instructor]
@@ -31,7 +31,7 @@ const router = express.Router()
 
 /**
  * @swagger
- * /instructor/make-instructors/{id}:
+ * /v1/instructor/make-instructors/{id}:
  *   get:
  *     summary: Promote a user to instructor role
  *     tags: [Instructor]
@@ -53,7 +53,7 @@ const router = express.Router()
 
 /**
  * @swagger
- * /instructor/my-classes:
+ * /v1/instructor/my-classes:
  *   get:
  *     summary: Get all classes added by this instructor
  *     tags: [Instructor]

@@ -20,7 +20,7 @@ app.use(logger)
 
 connectDb()
 // Routes
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/v1/user', userRoutes)
 app.use('/v1/ai', aiRoutes)
 app.use('/v1/coures', couresRoutes)

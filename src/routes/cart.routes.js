@@ -4,7 +4,7 @@ const router = express.Router();
 
 /**
  * @openapi
- * /carts:
+ * /v1/carts:
  *   get:
  *     tags:
  *       - Carts
@@ -32,7 +32,7 @@ const router = express.Router();
 
 /**
  * @openapi
- * /carts:
+ * /v1/carts:
  *   post:
  *     tags:
  *       - Carts
@@ -64,7 +64,7 @@ const router = express.Router();
 
 /**
  * @openapi
- * /carts:
+ * /v1/carts:
  *   delete:
  *     tags:
  *       - Carts

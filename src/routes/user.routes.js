@@ -12,7 +12,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /getUser:
+ * /v1/user/getUser:
  *   get:
  *     summary: Get a single user by email
  *     tags: [Users]
@@ -32,7 +32,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /postuser:
+ * /v1/user/postuser:
  *   post:
  *     summary: Add a new user
  *     tags: [Users]
@@ -58,7 +58,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /getAllUsers:
+ * /v1/user/getAllUsers:
  *   get:
  *     summary: Get all users with pagination
  *     tags: [Users]
@@ -78,7 +78,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /make-admin/{id}:
+ * /v1/user/make-admin/{id}:
  *   put:
  *     summary: Make a user admin by ID
  *     tags: [Users]
@@ -98,7 +98,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /is-club-member:
+ * /v1/user/is-club-member:
  *   get:
  *     summary: Check if a user is a club member
  *     tags: [Users]
@@ -118,7 +118,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /club-members:
+ * /v1/user/club-members:
  *   get:
  *     summary: Get all club members
  *     tags: [Users]
@@ -131,7 +131,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /add-club-member:
+ * /v1/user/add-club-member:
  *   post:
  *     summary: Add a new club member
  *     tags: [Users]

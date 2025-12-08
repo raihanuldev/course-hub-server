@@ -11,7 +11,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /sslPay:
+ * /v1/pay/sslPay:
  *   post:
  *     summary: Initiate SSLCommerz payment
  *     tags: [Payments]
@@ -41,7 +41,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /create-payment-intent:
+ * /v1/pay/create-payment-intent:
  *   post:
  *     summary: Create a Stripe payment intent
  *     tags: [Payments]
@@ -63,7 +63,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /payment-history:
+ * /v1/pay/payment-history:
  *   get:
  *     summary: Get payment history for a user
  *     tags: [Payments]
@@ -83,7 +83,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /payments:
+ * /v1/pay/payments:
  *   get:
  *     summary: Record a payment and update related course and cart
  *     tags: [Payments]

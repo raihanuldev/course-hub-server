@@ -6,7 +6,7 @@ const router = express.Router()
 
 /**
  * @openapi
- * /courses/topCoures:
+ * /v1/courses/topCoures:
  *   get:
  *     tags:
  *       - Courses
@@ -21,7 +21,7 @@ const router = express.Router()
 
 /**
  * @openapi
- * /courses/allCoures:
+ * /v1/courses/allCoures:
  *   get:
  *     tags:
  *       - Courses
@@ -36,7 +36,7 @@ const router = express.Router()
 
 /**
  * @openapi
- * /courses/enrolled-classes:
+ * /v1/courses/enrolled-classes:
  *   get:
  *     tags:
  *       - Courses
@@ -58,7 +58,7 @@ const router = express.Router()
 
 /**
  * @openapi
- * /courses/all-approved-coures:
+ * /v1/courses/all-approved-coures:
  *   get:
  *     tags:
  *       - Courses
@@ -73,7 +73,7 @@ const router = express.Router()
 
 /**
  * @openapi
- * /courses/make-approval/{id}:
+ * /v1/courses/make-approval/{id}:
  *   put:
  *     tags:
  *       - Courses
@@ -95,7 +95,7 @@ const router = express.Router()
 
 /**
  * @openapi
- * /courses/feedback/{id}:
+ * /v1/courses/feedback/{id}:
  *   put:
  *     tags:
  *       - Courses
@@ -122,7 +122,7 @@ const router = express.Router()
 
 /**
  * @openapi
- * /courses/deniedCoures/{id}:
+ * /v1/courses/deniedCoures/{id}:
  *   put:
  *     tags:
  *       - Courses
@@ -143,7 +143,7 @@ const router = express.Router()
 
 /**
  * @openapi
- * /courses/addNewCoures:
+ * /v1/courses/addNewCoures:
  *   post:
  *     tags:
  *       - Courses
@@ -168,7 +168,7 @@ const router = express.Router()
 
 /**
  * @openapi
- * /courses/content-collections/{courseId}:
+ * /v1/courses/content-collections/{courseId}:
  *   patch:
  *     tags:
  *       - Courses
@@ -197,7 +197,7 @@ const router = express.Router()
 
 /**
  * @openapi
- * /courses/content-collections/{courseId}:
+ * /v1/courses/content-collections/{courseId}:
  *   get:
  *     tags:
  *       - Courses

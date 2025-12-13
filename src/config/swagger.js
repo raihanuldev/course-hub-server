@@ -14,7 +14,7 @@ const options = {
         description: "Local Server"
       },
       {
-        url: "https://course-hub-server-xi.vercel.app", // production
+        url: "https://course-hub-server-su6k.onrender.com", // production
         description: "Production Server (Vercel)"
       }
     ],

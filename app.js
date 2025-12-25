@@ -17,7 +17,12 @@ const paymentRoutes = require('./src/routes/payment.routes');
 app.use(cors())
 app.use(express.json())
 app.use(logger)
-
+app.use((req, res, next) => {
+    res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
+    next();
+});
 // connectDb()
 // Routes
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -25,7 +30,7 @@ app.use('/v1/user', userRoutes)
 app.use('/v1/ai', aiRoutes)
 app.use('/v1/coures', couresRoutes)
 app.use('/v1/instructor', instructorRoutes)
-app.use('/v1/carts',cartRoutes)
-app.use('/v1/pay',paymentRoutes)
+app.use('/v1/carts', cartRoutes)
+app.use('/v1/pay', paymentRoutes)
 
 module.exports = app;

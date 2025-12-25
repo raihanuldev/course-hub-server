@@ -56,11 +56,13 @@ exports.AddNewModule = async (req, res) => {
 }
 
 exports.GetContent = async (req, res) => {
+    const db = getDB();
     const courseId = req.params.courseId;
     try {
+        const contentCollection = db.collection('content-collections');
         const doc = await contentCollection.findOne({ courseId });
         if (!doc) return res.status(404).json({ message: "No content found" });
-        res.json(doc);
+        sendResponse(res, doc);
     } catch (err) {
         res.status(500).json({ error: "Internal server error", err });
     }

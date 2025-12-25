@@ -2,6 +2,31 @@ const { getDB } = require("../config/db");
 const { ObjectId } = require('mongodb');
 const sendResponse = require("../utlites/sendResponse");
 
+
+exports.getCourseById = async (req, res) => {
+    const db = getDB();
+    const id = req.params.id;
+
+    try {
+        if (!ObjectId.isValid(id)) {
+            return res.status(400).json({ status: "error", message: "Invalid course ID" });
+        }
+
+        const _id = new ObjectId(id);
+        const course = await db.collection('couresCollection').findOne({ _id });
+
+        if (!course) {
+            return res.status(404).json({ status: "error", message: "Course not found" });
+        }
+
+        sendResponse(res, course);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: "error", message: err.message });
+    }
+};
+
+
 exports.addNewCoures = async (req, res) => {
     const db = getDB();
     try {

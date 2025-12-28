@@ -217,7 +217,7 @@ const router = express.Router()
  *         description: Internal server error
  */
 
-router.get('/:id', getCourseById); 
+router.get('/getcoures/:id', getCourseById); 
 router.get('/topCoures', getTopCoures)
 router.get('/allCoures', getAllCoures)
 router.get('/enrolled-classes', enrolledCoures)

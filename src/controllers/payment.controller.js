@@ -2,6 +2,8 @@ const { getDB } = require("../config/db");
 const { ObjectId } = require('mongodb')
 const sendResponse = require("../utlites/sendResponse");
 const SSLCommerzPayment = require('sslcommerz-lts')
+const stripe = require('stripe')(process.env.DB_PAYMENT_KEY);
+
 
 exports.getPaymentHistory = async (req, res) => {
     try {

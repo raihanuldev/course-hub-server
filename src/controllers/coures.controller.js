@@ -86,23 +86,16 @@ exports.enrolledCoures = async (req, res) => {
 
     try {
         // Check if email exists in clubMemberCollection
-        const isClubMember = await clubMemberCollection.findOne({ email: email });
+        // const isClubMember = await clubMemberCollection.findOne({ email: email });
 
         let enrolledClassDetails;
+        enrolledClassDetails = await db.collection('couresCollection').find({}).toArray();
+        const enrolledClasses = await db.collection('paymentCollection').find({ email: email }).toArray();
+        const enrolledClassIds = enrolledClasses.map(item => new ObjectId(item.couresId));
+        enrolledClassDetails = await db.collection('couresCollection').find({
+            _id: { $in: enrolledClassIds }
+        }).toArray();
 
-        if (isClubMember) {
-            // If club member, give access to all courses
-            enrolledClassDetails = await db.collection('couresCollection').find({}).toArray();
-        } else {
-            // If not a club member, fetch enrolled classes from paymentCollection
-            const enrolledClasses = await db.collection('paymentCollection').find({ email: email }).toArray();
-
-            const enrolledClassIds = enrolledClasses.map(item => new ObjectId(item.couresId));
-
-            enrolledClassDetails = await db.collection('couresCollection').find({
-                _id: { $in: enrolledClassIds }
-            }).toArray();
-        }
         sendResponse(res, enrolledClassDetails)
 
     } catch (error) {

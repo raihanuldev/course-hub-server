@@ -77,7 +77,7 @@ const router = express.Router()
 
 router.get('/topinstructor',getTopInstructor)
 router.get('/instructors',getAllInstructor)
-router.get('/make-instructors/:id',makeInstructor)
+router.put('/make-instructors/:id',makeInstructor)
 
 router.get('/my-classes',getMyAddedClass) //to get all taked class.
 
